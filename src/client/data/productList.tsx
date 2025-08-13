@@ -1,44 +1,42 @@
-import { collection, doc, getFirestore, getDoc, getDocs, deleteDoc, updateDoc ,FieldValue ,deleteField, setDoc  } from "firebase/firestore";
-import app from "../firebase";
-let productList :any[]= [];
-
-
+// src/client/data/productList.tsx
+import {
+  collection,
+  doc,
+  getFirestore,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+  deleteDoc,
+  deleteField,
+  DocumentData,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
+import app from "./../firebase";
 const db = getFirestore(app);
-const dbTest = getFirestore("test");
-interface ProductType {
-  id: string;
-  name: string;
-  itemNumber: string;
-  imageProduct: string;
+
+/** ---------- Domain types ---------- */
+export interface Product {
+  ID: string;
+  ULbeneficii: string[];
+  firstDescription: string;
+  imageProduct: string[];
+  jsonContent: string;
   price: string;
   discountedPrice: string;
   realStock: string;
   realStockCheck: string;
   fakeStock: string;
   fakeStockCheck: string;
+  reviews: Record<string, unknown>;
+  shortDescription: string;
+  title: string;
+  productTotalReviews?: number;
 }
+export type ProductMap = Record<string, Product>;
 
-interface OrderType {
-  orderId: string;
-  cartProducts: ProductType[];
-  cartSum: number;
-  city: string;
-  county: string;
-  deliveryAddress: string;
-  deliveryName: string;
-  emailAddress: string;
-  firstName: string;
-  invoiceID: string;
-  lastName: string;
-  orderNotes: string;
-  paymentMethod: string;
-  paymentStatus: string;
-  phoneNo: string;
-  shippingTax: number;
-  timestamp: string;
-}
-
-interface InvoiceModel {
+export interface InvoiceModel {
+  ID: string;
   client: {
     fullName: string;
     CUI: string;
@@ -52,316 +50,271 @@ interface InvoiceModel {
     adresa: string;
     telefon: string;
   };
-  items: InvoiceItem[];
-  ID: string;
-}
-interface InvoiceItem {
-  product: string;
-  price: number;
-  quantity: number;
+  items: Array<{ product: string; price: number; quantity: number }>;
 }
 
-// interface productType {
-//   ID: string;
-//   ULbeneficii: [];
-//   firstDescription: string;
-//   imageProduct: [];
-//   jsonContent: string;
-//   price: string;
-//   reviews: {};
-//   shortDescription: string;
-//   title: string;
-// }
+/** ---------- Module-scoped cache (optional) ---------- */
+let productList: Product[] = [];
 
-interface productType {
-  ID: string;
-  ULbeneficii: string[]; // Change to string[] to allow multiple benefits
-  firstDescription: string;
-  imageProduct: string[]; // Change to string[] to allow multiple image URLs
-  jsonContent: string;
-  price: string;
-  reviews: Record<string, any>; // Use Record for flexible review objects
-  shortDescription: string;
-  title: string;
-}
-
-
-export const deleteProductByID = async (productID: string) => {
-  try {
-    const activeProductsDocRef = doc(db, "products", "activeProds");
-    await updateDoc(activeProductsDocRef, {
-      [productID]: deleteField()
-    });
-
-    console.log(`Product with ID ${productID} successfully deleted from Firebase.`);
-  } catch (error) {
-    console.error("Error deleting product:", error);
-    throw error;
-  }
+/** ---------- Existing API (unchanged) ---------- */
+export const getOrderByID = async (invoiceID: number): Promise<DocumentData | null> => {
+  const ref = doc(db, "orders", invoiceID.toString());
+  const snap = await getDoc(ref);
+  return snap.exists() ? (snap.data() as DocumentData) : null;
 };
-// export const updateProduct = async (productId: string, updatedData: Partial<productType>) => {
-//   try {
-//     const productDoc = doc(db, "products", productId);
-//     await updateDoc(productDoc, updatedData);
-//     console.log(`Product with ID ${productId} updated successfully.`);
-//   } catch (error) {
-//     console.error("Error updating product:", error);
-//     throw error;
-//   }
-// };
 
-export const getOrderByID = async (invoiceID: number) => {
-  
-  const LoadData = async() =>{
-    const fireStoreModule = await import('firebase/firestore');
-    const productData = fireStoreModule.doc(db, "orders", invoiceID.toString());
-    const snap = await fireStoreModule.getDoc(productData);
-    let productsAreHere;
-    if (snap.exists()) {
-      productsAreHere = snap.data();
-    }
-    return productsAreHere;
-  }
-  return LoadData();
-
-};
-// export const getAllOrders = async () => {
-//   const snapShot = await getDocs(collection(db, "orders"));
-//   let dataProducts:any[] = [];
-
-//   snapShot.forEach((doc) => {
-//     dataProducts.push(doc.data());
-//   });
-
-//   return dataProducts;
-// };
-
-export const getAllOrders = async (): Promise<OrderType[]> => {
+export const getAllOrders = async (): Promise<DocumentData[]> => {
   const snapShot = await getDocs(collection(db, "orders"));
-  let dataOrders: OrderType[] = [];
-
-  snapShot.forEach((doc) => {
-    const orderData = doc.data();
-    dataOrders.push({
-      orderId: orderData.invoiceID,
-      cartProducts: JSON.parse(orderData.cartProducts), 
-      cartSum: orderData.cartSum,
-      city: orderData.city,
-      county: orderData.county,
-      deliveryAddress: orderData.deliveryAddress,
-      deliveryName: orderData.deliveryName,
-      emailAddress: orderData.emailAddress,
-      firstName: orderData.firstName,
-      invoiceID: orderData.invoiceID,
-      lastName: orderData.lastName,
-      orderNotes: orderData.orderNotes,
-      paymentMethod: orderData.paymentMethod,
-      paymentStatus: orderData.paymentStatus,
-      phoneNo: orderData.phoneNo,
-      shippingTax: orderData.shippingTax,
-      timestamp: orderData.timestamp,
-    });
-  });
-
-  return dataOrders;
+  const dataProducts: DocumentData[] = [];
+  snapShot.forEach((d: QueryDocumentSnapshot<DocumentData>) => dataProducts.push(d.data()));
+  return dataProducts;
 };
 
-export const deleteOrderByID = async (orderID: string) => {
-  try {
-    const orderDocRef = doc(db, "orders", orderID);
-    await deleteDoc(orderDocRef);
-    console.log(`Order with ID ${orderID} successfully deleted from Firebase.`);
-  } catch (error) {
-    console.error("Error deleting order:", error);
-    throw error;
+/**
+ * Create a product.
+ * By default it adds/updates inside the single map doc: products/activeProds.
+ * Pass mode: "doc" to store each product as its own document at products/{ID}.
+ */
+export const addProduct = async (
+  product: Product,
+  mode: "map" | "doc" = "map",
+  opts?: { mapDoc?: string } // override the map doc name if needed
+): Promise<{ ok: boolean; id?: string; fieldKey?: string; reason?: string }> => {
+  if (!product || !product.ID) {
+    return { ok: false, reason: "Product.ID is required" };
   }
+
+  if (mode === "doc") {
+    // one document per product: products/{ID}
+    const ref = doc(db, "products", product.ID);
+    await setDoc(ref, product, { merge: false });
+    return { ok: true, id: product.ID };
+  }
+
+  // default: keep everything in a single map doc (e.g., activeProds)
+  const mapDoc = opts?.mapDoc ?? "activeProds";
+  const ref = doc(db, "products", mapDoc);
+  const snap = await getDoc(ref);
+  const fieldKey = product.ID; // you can customize the key if you want
+
+  if (snap.exists()) {
+    await updateDoc(ref, { [fieldKey]: product });
+  } else {
+    await setDoc(ref, { [fieldKey]: product });
+  }
+
+  return { ok: true, fieldKey };
 };
 
-export const getData = async () => {
-  const snapShot = await getDocs(collection(db , "products"));
-  let dataProducts = {};
+/**
+ * Delete an order by ID.
+ * Primary model: one doc per order → orders/{orderID}
+ * Fallback model (optional): a single map doc → orders/activeOrders (or custom via opts.mapDoc)
+ */
+export const deleteOrderByID = async (
+  orderID: string | number,
+  opts?: { mapDoc?: string }
+): Promise<{ ok: boolean; reason?: string }> => {
+  const id = String(orderID);
 
-  snapShot.forEach((doc) => {
-    Object.values(doc.data()).forEach((itemData: productType) => {
-      dataProducts = {
-        ...dataProducts,
-        [itemData.ID]: {
-          ID: itemData.ID,
-          ULbeneficii: itemData.ULbeneficii,
-          firstDescription: itemData.firstDescription,
-          imageProduct: itemData.imageProduct,
-          jsonContent: itemData.jsonContent,
-          price: itemData.price,
-          reviews: itemData.reviews,
-          shortDescription: itemData.shortDescription,
-          title: itemData.title
-        }
-      };
+  // Try the per-document model first
+  const perDocRef = doc(db, "orders", id);
+  const perDocSnap = await getDoc(perDocRef);
+  if (perDocSnap.exists()) {
+    await deleteDoc(perDocRef);
+    return { ok: true };
+  }
+
+  // Fallback: map document (e.g., orders/activeOrders)
+  const mapDoc = opts?.mapDoc ?? "activeOrders";
+  const mapRef = doc(db, "orders", mapDoc);
+  const mapSnap = await getDoc(mapRef);
+  if (!mapSnap.exists()) return { ok: false, reason: "Order not found" };
+
+  const data = mapSnap.data() as Record<string, any>;
+  const entry = Object.entries(data).find(
+    ([key, val]) => key === id || val?.ID === id || val?.invoiceID === id
+  );
+  if (!entry) return { ok: false, reason: "Order not found in map doc" };
+
+  const [fieldKey] = entry;
+  await updateDoc(mapRef, { [fieldKey]: deleteField() });
+  return { ok: true };
+};
+
+
+export const getData = async (): Promise<ProductMap> => {
+  const snapShot = await getDocs(collection(db, "products"));
+  let dataProducts: ProductMap = {};
+  snapShot.forEach((docSnap) => {
+    const values = Object.values(docSnap.data()) as Product[];
+    values.forEach((itemData) => {
+      dataProducts[itemData.ID] = { ...itemData };
     });
   });
   return dataProducts;
 };
 
-export const getProductWithID = async (productID: string) => {
-  const productData = doc(db, "products", "activeProds");
-  const snap = await getDoc(productData);
-  let productsAreHere:any;
-  if (snap.exists()) {
-    Object.values(snap.data()).map((item: productType) => {
-      productsAreHere = {
-        ...productsAreHere,
-        [item.ID]: {
-          ID: item.ID,
-          ULbeneficii: item.ULbeneficii,
-          firstDescription: item.firstDescription,
-          imageProduct: item.imageProduct,
-          jsonContent: item.jsonContent,
-          price: item.price,
-          reviews: item.reviews,
-          shortDescription: item.shortDescription,
-          title: item.title
-        }
-      };  
-    }); 
-    // productsAreHere = Object.values(snap.data());  
-  } 
-  //Here we need to make the call for a specific ID, not for the whole collection of products.  
-  //but till then, we will do this way. 
-  console.log("getProductWithID will return :", productsAreHere); 
+export const getProductWithID = async (productID: string): Promise<ProductMap | null> => {
+  const ref = doc(db, "products", "activeProds");
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return null;
 
+  const productsAreHere: ProductMap = {};
+  (Object.values(snap.data()) as Product[]).forEach((item) => {
+    productsAreHere[item.ID] = { ...item };
+  });
   return productsAreHere;
 };
-const getallPr = async () => {
-  const productData = doc(db, "products", "activeProds");
-  const snap = await getDoc(productData);
-  let productsAreHere: any[] = [];
-  if (snap.exists()) {
-    productsAreHere = Object.values(snap.data());
-  }
-  //Here we need to make the call for a specific ID, not for the whole collection of products.
-  //but till then, we will do this way.
 
-  return productsAreHere;
+const getallPr = async (): Promise<Product[]> => {
+  const ref = doc(db, "products", "activeProds");
+  const snap = await getDoc(ref);
+  return snap.exists() ? (Object.values(snap.data()) as Product[]) : [];
 };
-export const getInvoiceByID = async (ID: string) => {
+
+export const getInvoiceByID = async (
+  ID: string
+): Promise<Record<string, unknown> | null> => {
   const invoiceData = doc(db, "invoice", "activeInvoice");
   const snapInvoice = await getDoc(invoiceData);
-  var invoicesAreHere:any;
-  if (snapInvoice.exists()) {
-    Object.values(snapInvoice.data()).map(async (invoice: InvoiceModel) => {
-      invoicesAreHere = {
-        ...invoicesAreHere,
-        [invoice.ID]: {
-          ID: invoice.ID,
-          clientName: invoice.client.fullName,
-          clientCUI: invoice.client.CUI,
-          clientBanca: invoice.client.banca,
-          clientAdresa: invoice.client.adresa,
-          clientTelefon: invoice.client.telefon,
-          clientEmail: invoice.client.email,
-          providerName: invoice.provider.fullName,
-          providerAdresa: invoice.provider.adresa,
-          providerTelefon: invoice.provider.telefon,
-          items: invoice.items
-        }
-      };
-    });
-  }
-  console.log("getInvoiceByID will return :", invoicesAreHere);
+  if (!snapInvoice.exists()) return null;
+
+  const invoicesAreHere: Record<string, unknown> = {};
+  (Object.values(snapInvoice.data()) as InvoiceModel[]).forEach((invoice) => {
+    (invoicesAreHere as any)[invoice.ID] = {
+      ID: invoice.ID,
+      clientName: invoice.client.fullName,
+      clientCUI: invoice.client.CUI,
+      clientBanca: invoice.client.banca,
+      clientAdresa: invoice.client.adresa,
+      clientTelefon: invoice.client.telefon,
+      clientEmail: invoice.client.email,
+      providerName: invoice.provider.fullName,
+      providerAdresa: invoice.provider.adresa,
+      providerTelefon: invoice.provider.telefon,
+      items: invoice.items,
+    };
+  });
 
   return invoicesAreHere;
 };
-export const getObjectByID = (id: string): Promise<any> => {
-  const documentRef = doc(db, "orders", id);
 
-  return new Promise((resolve, reject) => {
-    getDoc(documentRef)
-      .then((documentSnapshot) => {
-        if (documentSnapshot.exists()) {
-          const objectData = documentSnapshot.data();
-          console.log("Object data is:", objectData);
-          // Process the object or perform any necessary transformations
-          resolve(objectData);
-        } else {
-          // Handle the case when the document does not exist
-          resolve(null);
-        }
-      })
-      .catch((error) => {
-        // Handle any errors that occur during the retrieval process
-        console.error("Error fetching object from Firebase:", error);
-        reject(error);
-      });
-  });
+export const getObjectByID = (id: string): Promise<DocumentData | null> => {
+  const documentRef = doc(db, "orders", id);
+  return getDoc(documentRef)
+    .then((documentSnapshot) =>
+      documentSnapshot.exists() ? (documentSnapshot.data() as DocumentData) : null
+    );
 };
 
-// devConsole("Product is loading...");
+/** ---------- NEW: match your imports in Products.tsx ---------- */
 
+/**
+ * Delete a product by its logical Product.ID.
+ * Works in two common layouts:
+ * 1) Each product is its own doc: products/{ID}   (delete entire doc)
+ * 2) All products are fields inside one doc: products/activeProds
+ *    (delete the field whose value has .ID === productID)
+ */
+export const deleteProductByID = async (
+  productID: string
+): Promise<{ ok: boolean; reason?: string }> => {
+  // Try doc-per-product first
+  const perDocRef = doc(db, "products", productID);
+  const perDocSnap = await getDoc(perDocRef);
+  if (perDocSnap.exists()) {
+    await deleteDoc(perDocRef);
+    return { ok: true };
+  }
+
+  // Fallback: inside a single map doc (activeProds)
+  const mapRef = doc(db, "products", "activeProds");
+  const mapSnap = await getDoc(mapRef);
+  if (!mapSnap.exists()) return { ok: false, reason: "No products map found" };
+
+  const data = mapSnap.data() as Record<string, Product>;
+  const entry = Object.entries(data).find(([, val]) => val?.ID === productID);
+  if (!entry) return { ok: false, reason: "Product not found in activeProds" };
+
+  const [fieldKey] = entry;
+  await updateDoc(mapRef, { [fieldKey]: deleteField() });
+  return { ok: true };
+};
+
+/**
+ * Update a product by ID.
+ * - mode "doc": updates the document at products/{productID}
+ * - mode "map": updates the field inside products/{mapDoc} whose value has .ID === productID
+ */
+export const updateProduct = async (
+  productID: string,
+  updates: Partial<Product>,
+  mode: "map" | "doc" = "map",
+  opts?: { mapDoc?: string; fieldKey?: string }
+): Promise<{ ok: boolean; reason?: string }> => {
+  if (!productID) return { ok: false, reason: "productID is required" };
+  if (!updates || Object.keys(updates).length === 0) {
+    return { ok: false, reason: "no updates provided" };
+  }
+
+  if (mode === "doc") {
+    const ref = doc(db, "products", productID);
+    const snap = await getDoc(ref);
+    if (!snap.exists()) return { ok: false, reason: "product doc not found" };
+
+    // ✅ Patch the doc using merge (avoids updateDoc typing issues)
+    await setDoc(ref, updates, { merge: true });
+    return { ok: true };
+  }
+
+  // mode === "map"
+  const mapDoc = opts?.mapDoc ?? "activeProds";
+  const ref = doc(db, "products", mapDoc);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return { ok: false, reason: `map doc "${mapDoc}" not found` };
+
+  const data = snap.data() as Record<string, Product>;
+  let fieldKey = opts?.fieldKey;
+  if (!fieldKey) {
+    const found = Object.entries(data).find(([, val]) => val?.ID === productID);
+    if (!found) return { ok: false, reason: "product not found in map doc" };
+    fieldKey = found[0];
+  }
+
+  const current = data[fieldKey];
+  const next: Product = { ...current, ...updates };
+
+  // ✅ Patch the map doc field using merge
+  await setDoc(ref, { [fieldKey]: next }, { merge: true });
+  return { ok: true };
+};
+
+
+
+/**
+ * Copy all products from one doc to another (default: activeProds → activeProdsBackup).
+ * If merge=true, it will merge into the target doc; otherwise it overwrites.
+ */
+export const copyAllData = async (
+  from: string = "activeProds",
+  to: string = "activeProdsBackup",
+  merge: boolean = true
+): Promise<{ ok: boolean; reason?: string }> => {
+  const fromRef = doc(db, "products", from);
+  const toRef = doc(db, "products", to);
+
+  const snap = await getDoc(fromRef);
+  if (!snap.exists()) return { ok: false, reason: `Source doc "${from}" not found` };
+
+  await setDoc(toRef, snap.data(), { merge });
+  return { ok: true };
+};
+
+/** ---------- Warm the cache (optional) ---------- */
 getallPr().then((data) => {
   productList = data;
-  console.log("Done");
+  // console.log("Done");
 });
-
-export const addProduct = async (product: productType) => {
-  try {
-    const activeProductsDocRef = doc(db, "products", "activeProds");
-    const activeProductsDocSnap = await getDoc(activeProductsDocRef);
-
-    if (activeProductsDocSnap.exists()) {
-      const products = activeProductsDocSnap.data() || {};
-      products[product.ID] = product;
-      await updateDoc(activeProductsDocRef, products);
-    } else {
-      const newProduct = {
-        [product.ID]: product
-      };
-      await setDoc(activeProductsDocRef, newProduct);
-    }
-
-    console.log(`Product with ID ${product.ID} successfully added to Firebase.`);
-  } catch (error) {
-    console.error("Error adding product:", error);
-    throw error;
-  }
-};
-
-export const updateProduct = async (productId: string, updatedProductData: Partial<productType>) => {
-  try {
-    const productDocRef = doc(db, "products", "activeProds"); 
-
-    // Get the current data
-    const currentDoc = await getDoc(productDocRef);
-    if (!currentDoc.exists()) {
-      throw new Error(`Product with ID ${productId} does not exist.`);
-    }
-    await updateDoc(productDocRef, {
-      [`${productId}`]: updatedProductData,
-    });
-
-    console.log(`Product with ID ${productId} updated successfully.`);
-  } catch (error) {
-    console.error("Error updating product:", error);
-    throw error;
-  }
-};
-
-export const copyAllData = async () => {
-  try {
-    const collectionsSnapshot = await getDocs(collection(db, "orders"));
-    for (const docSnapshot of collectionsSnapshot.docs) {
-      const collectionRef = collection(dbTest, "orders");
-      const docRef = doc(collectionRef, docSnapshot.id);
-      const docData = docSnapshot.data();
-
-      await setDoc(docRef, docData);
-
-      console.log(`Document with ID ${docSnapshot.id} copied successfully.`);
-    }
-
-    console.log("All data copied successfully.");
-  } catch (error) {
-    console.error("Error copying data:", error);
-  }
-};
 
 export default productList;

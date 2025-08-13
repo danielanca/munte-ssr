@@ -5,21 +5,12 @@ const PublicLayout = loadable(() => import("../layouts/public/PublicLayout"), { 
 
 const ProduseleNoastre = loadable(() => import("../components/OurProducts/ProduseleNoastre"), { ssr: true });
 const FinishOrder = loadable(() => import("../components/CartPage1/FinishOrder"), { ssr: true });
-const Thankyou = loadable(() => import("../components/CartPage1/OrderDone"), { ssr: true });
 const Blogs = loadable(() => import("../components/mini/ConstantComponents/Blogs"), { ssr: true });
 const CartPage = loadable(() => import("../components/CartPage1/CartPage"), { ssr: true });
 const BlogPost = loadable(() => import("../components/mini/ConstantComponents/BlogPost"), { ssr: true });
 const OrderView = loadable(() => import("../components/OrderView/OrderView"), { ssr: true });
-const VideoInstructions = loadable(() => import("../components/VideoInstructions/VideoInstructions"), { ssr: true });
-const VideoInstructionsSupliment = loadable(
-  () => import("../components/VideoInstructions/VideoInstructionsSupliment"),
-  { ssr: true }
-);
-const Instructionsnew = loadable(() => import("../pages/InstructionsNew/Instructions"), { ssr: true });
-const MoonConfigurator = loadable(() => import("../components/configurator/MoonConfigurator/MoonConfigurator"), {
-  ssr: true,
-});
 const MainNavigation = loadable(() => import("../components/Navigation/MainNavigation"), { ssr: true });
+const Desprenoi = loadable(() => import("../blocks/Desprenoi"));
 
 
 import { TextContentRoutes } from "./contentRoutes/contentRoutes";
@@ -52,9 +43,9 @@ const publicRoutes: RouteType[] = [
     props: { clearNotification: clearNotification },
   },
   {
-    path: "thank-you",
+    path: "saredebai",
     layout: PublicLayout,
-    component: Thankyou,
+    component: ProduseleNoastre,
   },
   {
     path: "cosulmeu",
@@ -83,24 +74,11 @@ const publicRoutes: RouteType[] = [
     component: OrderView,
   },
 
+  
   {
-    path: "/instructiuni-video",
+    path: "desprenoi",
     layout: PublicLayout,
-    component: VideoInstructions,
-  },
-
-  {
-    path: "/video-suplimentar",
-    layout: PublicLayout,
-    component: VideoInstructionsSupliment,
-  },
-  {
-    path: "/instructiuni",
-    component: Instructionsnew,
-  },
-  {
-    path: "configurator/moon",
-    component: MoonConfigurator,
+    component: Desprenoi,
   },
   {
     path: "/contact",

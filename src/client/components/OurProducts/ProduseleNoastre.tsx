@@ -1,50 +1,44 @@
-
-// @ts-nocheck
+// ProduseleNoastre.tsx
 import React, { useEffect, useState } from "react";
-import uniqueId from "lodash/uniqueId";
-import HelmetHead from '../mini/HelmetHead/HelmetHead';
-import HeadlineTitle from "../mini/HeadLiners/HeadLiners/HeadlineTitle";
-import ProductItem from "../Products/ProductItem";
-
-import { ProductsFromSessionStorage } from '../../data/constants';
-import {ProductListType} from "../../utils/OrderInterfaces";
-import styles from "../../components/OurProducts/ProduseleNoastre.module.scss";
-import strings from '../../data/strings.json';
+import HelmetHead from "../MiniComponents/HelmetHead/HelmetHead";
+import ProductItemDetailsNew from "../OtherComponents/ProductItemDetailsNew";
+import strings from "../../data/strings.json";
+import { getData } from "../../data/productList";
+import { ProductsFromSessionStorage } from "../../data/constants";
+import type { ProductListType } from "../../utils/OrderInterfaces";
+import styles from "./ProduseleNoastre.module.scss";
 
 const ProduseleNoastre = () => {
-  let { ProduseleNoastre } = strings;
-  const [products, setProducts] = useState<ProductListType[] | null>(null);
-  let productsFromSession = sessionStorage.getItem(ProductsFromSessionStorage);
+  const { ProduseleNoastre: ProduseleNoastreStrings } = strings;
+
+  const [products, setProducts] = useState<ProductListType | null>(null);
+  const productsFromSession = sessionStorage.getItem(ProductsFromSessionStorage);
 
   useEffect(() => {
-    if (productsFromSession != null) {
+    if (productsFromSession) {
       setProducts(JSON.parse(productsFromSession));
     } else {
-      const getTheInfo = async () =>{
-          const {getData} = await import('../../data/productListold');
-          getData().then((finalData:any) => {
-            setProducts(JSON.parse(JSON.stringify(finalData)));
-          });
-      }
-      getTheInfo();
+      getData().then((finalData) => {
+        // ensure finalData matches ProductListType (a dictionary)
+        setProducts(JSON.parse(JSON.stringify(finalData)));
+      });
     }
   }, [productsFromSession]);
 
   return (
     <>
-      <HelmetHead title={ProduseleNoastre.title} description={ProduseleNoastre.metaDescription} />
+      <HelmetHead
+        title={ProduseleNoastreStrings.title}
+        description={ProduseleNoastreStrings.metaDescription}
+      />
 
-      <HeadlineTitle title={ProduseleNoastre.title} />
       <div className={styles.blockContainer}>
-        <div className={styles.productList}>
-          {products != null
-            ? Object.values(products).map((item: ProductListType) => (
-                <ProductItem key={uniqueId()} productObject={item} />
-              ))
-            : strings.loadingData}
+        <div>
+          <ProductItemDetailsNew productData={products} />
         </div>
       </div>
     </>
   );
 };
+
 export default ProduseleNoastre;

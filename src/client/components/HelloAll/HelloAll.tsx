@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from "react";
 import styles from "./HelloAll.module.scss";
 import images from "./../../data/images";

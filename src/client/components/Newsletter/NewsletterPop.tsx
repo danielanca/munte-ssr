@@ -7,7 +7,7 @@ import InputComponent from "./InputComponent";
 
 import { SubscriptionType, Sub, emailValidType, inputStateEmail } from "../../data/constants";
 import { NewsProps, responseProps, EventInsert } from "./../../utils/NewsletterInterface";
-import { addToNewsletter } from "../../services/emails";
+import { addToNewsletter } from "../../services/emails1";
 import strings from "../../data/strings.json";
 import { newsletter } from "./../../data/componentStrings";
 

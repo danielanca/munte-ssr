@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ContextWrapper } from "./Context";
 import "@fontsource/luckiest-guy";
-import useScrollHandler from "./components/hooks/hooks/useScrollHandler";
-import useProductData from "./components/hooks/hooks/useProductData";
+import { useScrollSense } from "./components/hooks/senseHook/useScrollSense";
+import ReactGA from "react-ga4";
+
+
+
 import routes from "./routes/routes";
 import CookieConsent from "./components/CookieConsent/CookieConsent";
 import { getCookie } from "./utils/functions";
@@ -17,7 +20,12 @@ import LoadingSpinner from "./AdminDashboard/components/UI/loadingSpinner/Loadin
 import { Suspense } from "react";
 import useAuthTokenExpiration from "./AdminDashboard/components/auth/firebase/useAuthTokenExpiratio";
 import { auth } from "./firebase";
-import AnalyticsSnippet from "./components/AnalyticsScript";
+import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "../client/data/customCSS.scss";
+
+
+
 /* XXXXXXXXXXXXXXXXXXX */
 
 /* WORDS BEFORE: If you run the SSR server as yarn build and then yarn serve, it will be marked as NODE_ENV=PRODUCTION*/
@@ -27,9 +35,10 @@ import AnalyticsSnippet from "./components/AnalyticsScript";
 
 export const App = () => {
   const getCookieConsent = () => typeof document !== "undefined" && getCookie("cookieConsentBrasov") !== "userAccepted";
-  useScrollHandler();
+  useScrollSense(() => {
+    ReactGA.event(`User scrolled to bottom on [${window.location.pathname}]`);
+  });
   useAuthTokenExpiration(auth);
-  const [ssProducts, setSSproducts] = useProductData(); // This will manage product data
 
   return (
     <LangContextProvider>
@@ -39,7 +48,6 @@ export const App = () => {
             <ContextWrapper>
               {/* {getCookieConsent() && <CookieConsent />} */}
               <AppProvider>
-                <AnalyticsSnippet />
                 <Suspense fallback={<LoadingSpinner />}>
                   <Routes>
                     {routes.map((route, index) => {

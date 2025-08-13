@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
 import { orderProps } from "../../client/utils/OrderInterfaces";
-import { sendOrderConfirmation } from "../../client/services/emails";
+import { sendOrderConfirmation } from "../services/emails1";
 import { NavigateFunction } from "react-router-dom";
 import configsAPI from "./../../client/data/configsAPI.json";
 

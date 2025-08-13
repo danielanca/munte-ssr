@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import {useOnScreen} from './../../../hooks/onScreen';
+import { useOnScreen } from "../../../hooks/onScreen";
 
 export const useScrollSense = (callBk: () => void) => {
   const handleScroll = () => {
@@ -19,13 +19,12 @@ export const useScrollSense = (callBk: () => void) => {
   }, []);
 };
 
-export const useSenseScreen = (ref: any, path: any, funcCall?: () => void) => {
+export const useSenseScreen = (ref: any, path: any) => {
   const isVisible = useOnScreen(ref);
 
   useEffect(() => {
     if (isVisible) {
-      // console.log("User is interacting with:", path, funcCall);
-      if (funcCall) funcCall();
+      console.log("User is interacting with:", path);
     }
   }, [isVisible]);
 };

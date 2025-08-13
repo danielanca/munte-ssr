@@ -9,18 +9,15 @@ export const useOrderObject = () => {
     emailAddress: "",
     deliveryAddress: "",
     city: "",
+    county: "",
     paymentMethod: "",
     cartProducts: "",
     phoneNo: "",
     cartSum: 0,
     shippingTax: productConstants.shippingFee,
     orderNotes: "",
-    deliveryName: "Sameday Curier",
-    paymentStatus: "NOT_PAID",
-    deliveryMethod: "NOT_SPECIFIED",
-    lockerName: "",
-    countyID: "",
-    awb: "",
+    deliveryName: "DPD Curier",
+    paymentStatus: "NOT_PAID"
   });
 
   return { orderData, setorderData };

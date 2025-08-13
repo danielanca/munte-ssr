@@ -1,3 +1,5 @@
+
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import uniqueId from "lodash/uniqueId";
 import HelmetHead from '../mini/HelmetHead/HelmetHead';
@@ -19,7 +21,7 @@ const ProduseleNoastre = () => {
       setProducts(JSON.parse(productsFromSession));
     } else {
       const getTheInfo = async () =>{
-          const {getData} = await import('../../data/productList');
+          const {getData} = await import('../../data/productListold');
           getData().then((finalData:any) => {
             setProducts(JSON.parse(JSON.stringify(finalData)));
           });

@@ -1,27 +1,60 @@
 {
-  "websiteTitle": "DinIubire.Ro",
-  "loadingData": "Loading data...",
+  "websiteTitle": "MontanAir.Ro",
+
+  "elasticGallery": {
+    "sapunCosmetic": {
+      "name": "Sapun Cosmetic",
+      "link": "sapun-carbune",
+      "image": "https://firebasestorage.googleapis.com/v0/b/sapunmontan.appspot.com/o/montanAir%2FcategoriiPoze%2Fcleansing-scrub-presenting-female-cosmetic-product-woman-use-face-cream_545934-26939.webp?alt=media&token=9eb71783-90bb-44e1-b403-b353be7bd0fb",
+      "text": " "
+    },
+    "scrubNatural": {
+      "name": "Scrub Natural",
+      "link": "sapun-carbune",
+      "image": "https://firebasestorage.googleapis.com/v0/b/sapunmontan.appspot.com/o/montanAir%2FcategoriiPoze%2Ffacial-care-female-applying-cream-smiling-portrait-young-woman-cosmetic-skin-closeup-beautiful-girl-wi-beauty-170374576.jpg?alt=media&token=af845bf4-ad6a-45b0-af55-ad61304fc296",
+      "text": " "
+    },
+    "pastaDinti": {
+      "name": "Sapun Cosmetic",
+      "link": "sapun-carbune",
+      "image": "https://firebasestorage.googleapis.com/v0/b/sapunmontan.appspot.com/o/montanAir%2FcategoriiPoze%2Fistockphoto-1208515511-612x612.jpg?alt=media&token=bd02902c-31b1-4474-bc9e-a3de116589c7",
+      "text": " "
+    },
+    "cremaNoapte": {
+      "name": "Scrub Natural",
+      "link": "sapun-carbune",
+      "image": "https://firebasestorage.googleapis.com/v0/b/sapunmontan.appspot.com/o/montanAir%2FcategoriiPoze%2Fistockphoto-1290579053-612x612.jpg?alt=media&token=d6077525-5df0-4ab2-91bb-e7cc95a93f3f",
+      "text": " "
+    },
+    "cremaZi": {
+      "name": "Scrub Zi",
+      "link": "sapun-carbune",
+      "image": "https://firebasestorage.googleapis.com/v0/b/sapunmontan.appspot.com/o/montanAir%2FcategoriiPoze%2Fistockphoto-1290579053-612x612.jpg?alt=media&token=d6077525-5df0-4ab2-91bb-e7cc95a93f3f",
+      "text": " "
+    }
+  },
+
   "DiscoverOurProducts": {
-    "title": "DinIubire.Ro",
-    "textSmall": "amintire pentru totdeauna"
+    "title": "MontanAir.Ro",
+    "textSmall": "Produse Naturale pentru Tine"
   },
 
   "GrayPromotion": {
     "text": "Un moment durează <strong> câteva secunde</strong>, dar amintirile rămân pentru totdeauna. - Lori Robinson"
   },
   "ProduseleNoastre": {
-    "title": "Produse",
-    "metaDescription": "Lista produse DinIubire.Ro"
+    "title": "Produsele Noastre",
+    "metaDescription": "Lista produse MontanAir.Ro"
   },
   "socialsInfo": {
     "socialLinks": {
-      "instagram": { "link": "https://instagram.com/DinIubire.Ro", "image": "instagram" },
-      "facebook": { "link": "https://facebook.com/DinIubire.Ro", "image": "facebook" },
-      "whatsapp": { "link": "https://whatsapp.com/DinIubire.Ro", "image": "whatsapp" }
+      "instagram": { "link": "https://instagram.com/MontanAir.Ro", "image": "instagram" },
+      "facebook": { "link": "https://facebook.com/MontanAir.Ro", "image": "facebook" },
+      "whatsapp": { "link": "https://whatsapp.com/MontanAir.Ro", "image": "whatsapp" }
     }
   },
   "navMenu": {
-    "ourProducts": { "name": "Produse", "link": "/produsele-noastre" },
+    "ourProducts": { "name": "Produsele noastre", "link": "/produsele-noastre" },
     "aboutUs": { "name": "Despre noi", "link": "/produsele-noastre" },
     "blog": { "name": "Blog", "link": "/blogs" },
     "middleNOUI": { "name": "middle" },
@@ -76,11 +109,11 @@
   },
 
   "companyData": {
-    "name": "ANCA DANIEL-EMANUEL PERSOANA FIZICA AUTORIZATA",
-    "number": "45044473",
-    "fiscal": "F12/2218/12.10.2021",
-    "address": "str. Plopilor nr.3 loc. Turda, Cluj",
-    "phoneNumber": "0745 469 907"
+    "name": "ELYS MOMOANE S.R.L",
+    "number": "RO46091570",
+    "fiscal": "J12/2529/10.05.2022",
+    "address": "str. Fragariste nr.28 loc. Turda, Cluj",
+    "phoneNumber": "+40 759 796 202"
   },
 
   "footerText": {
@@ -95,24 +128,24 @@
   "orderFinishPage": {
     "finishGuide": "Finalizeaza comanda",
     "deliveringInfor": "Pregatim comanda de indata, ne mai lipsesc datele de livrare",
-    "invoiceDetails": "Detalii livrare",
+    "invoiceDetails": "",
     "inputsLabels": {
       "lastName": "Nume",
       "firstName": "Prenume",
       "deliveryAddress": "Strada",
       "city": "Oras",
+      "county": "Judet",
       "phoneNo": "Telefon",
-      "emailAddress": "Email [pentru Easybox este necesar sa primiti informatii]",
-      "orderMentions": "Note comandă [opțional]",
-      "lockerDelivery": "Scrie numele easybox-ului și orasul"
+      "emailAddress": "Email",
+      "orderMentions": "Note comandă [opțional]"
     },
 
     "totals": {
       "product": "Produs",
       "total": "Total",
-      "subTotal": "Subtotal",
-      "currency": "RON",
-      "TVAincluded": "",
+      "subTotal": "Pret",
+      "currency": "lei",
+      "TVAincluded": "TVA inclus",
       "transport": "Transport"
     },
     "shipping": {
@@ -122,10 +155,6 @@
         "cash": "Numerar",
         "card": "Card",
         "transfer": "Transfer bancar"
-      },
-      "deliveryMethods": {
-        "courierDelivery": "Livrare_CURIER",
-        "easyboxDelivery": "Easybox"
       },
       "paymentMethodError": "Nu ati selectat metoda de plata!",
       "inputError": "Verificati datele introduse. Completarea spatilor cu * bulina sunt obligatorii"
@@ -141,11 +170,10 @@
     },
     "orderItself": {
       "sendFinishOrder": {
-        "nameButton": "Trimite comanda",
+        "nameButton": "Pasul Urmator",
         "pendingMessage": "Se trimite comanda..."
       }
-    },
-    "infomessage": "Daca comanda nu s-a plasat, sunati-ne la 0745469907 sau trimiteti-ne mesaj SMS/whatsapp"
+    }
   },
 
   "blogsArea": {
@@ -161,14 +189,14 @@
 
   "testimonialsArea": {
     "title": "Testimoniale",
-    "descriptionIntroduction": "Afla parerea clientilor despre produsele DinIubire.Ro!"
+    "descriptionIntroduction": "Afla parerea clientilor despre produsele MontanAir.Ro!"
   },
 
   "orderView": {
     "product": "Produs",
     "unit": "buc",
     "pricePerUnit": "Pret bucata",
-    "currency": "RON",
+    "currency": "lei",
     "subtotal": "Subtotal",
     "shippingTax": "Taxa transport",
     "total": "Total",
@@ -183,24 +211,22 @@
     },
     "ownerSide": {
       "title": "Magazin",
-      "companyName": "ANCA DANIEL EMANUEL PFA",
-      "fiscal": "F12/2218/12.10.2021",
-      "number": "45044473",
-      "address": "str. Plopilor nr.3 loc. Turda, Cluj "
+      "companyName": "Rus EMIL CRISTIAN INTREPRINDERE INDIVIDUALA",
+      "fiscal": "F12/696/23.04.2019",
+      "number": "41030416",
+      "address": "str. LIVIU REBREANU loc. Turda, Cluj "
     },
 
     "thankYouMessage": {
       "title": "Multumim pentru incredere!",
-      "author": "Echipa DinIubire.Ro "
+      "author": "Echipa MontanAir.Ro "
     }
   },
 
   "ProductPreview": {
     "callActionForReview": "Scrie un review",
 
-    "addToCartText": "Adauga in cos",
-    "uploadminialbum": "Incarca pozele",
-    "miniuploaded": "Poze incarcate"    
+    "addToCartText": "Adauga in cos"
   },
   "NotExistingProduct": {
     "warningHeadline": "PRODUS INEXISTENT !",
@@ -208,12 +234,13 @@
   },
   "ProductItem": {
     "SeeProduct": "Vezi produs",
-    "Currency": "RON"
+    "Currency": "lei"
   },
   "MyCart": {
     "quantity": "Cantitate",
     "product": "Produse",
     "finishOrder": { "text": "Finalizeaza comanda", "link": "/finalizare-comanda" },
+    "finishOrderCosulmeu": { "text": "Pasul Urmator", "link": "/finalizare-comanda" },
     "cartShopping": "Cos de cumparaturi",
     "emptyCart": "Cosul de cumparaturi este gol",
     "totalCart": "Total Cos",
@@ -221,13 +248,15 @@
     "shippingTax": "Taxa transport",
     "total": "Total",
     "sendingInfo": "Livrare standard prin SameDay",
-    "VATincluded": "LEI (Taxe incluse)",
-    "currency": "RON"
+    "VATincluded": "(include TVA)",
+    "currency": "lei"
   },
 
   "OrderDone": {
-    "title": "Comanda a fost inregistrată!😃",
-    "subtitle": "Pregatim coletul! <strong> Va multumim! </strong>",
+    "title": "Multumim !",
+    "subtitle": "Vă mulțumim că ați vizitat site-ul Dinmunte. Veți primi un mesaj de e-mail în scurt timp.",
+    "verificati_title": "Verifica-ti email-ul",
+    "verificati_subtitle": "Dacă nu ați primit niciun e-mail, contactați info@dinmunte.ro",
     "goHome": "Spre pagina principala"
   },
 
@@ -245,8 +274,8 @@
   },
 
   "BrandDetailsStr": {
-    "title": "DinIubire.Ro - cream amintiri impreuna",
-    "description": "Psihologul William James spunea, <br> <i>'Mergi in viata cu un zambet pe fata si cu un scop maret in inima'.</i><br> Noi avem deja unul, <br>sa va ajutam sa creati momente cu cei dragi,<br> pentru totdeauna."
+    "title": "MontanAir.Ro - produse premium pentru tine",
+    "description": "Construim si optimizam produsele ceea ce facem pentru ca tu sa poti avea parte de o amintire placuta cu persoanele dragi"
   },
 
   "FAQ": {
@@ -254,12 +283,12 @@
     "bottomText": "Intrebari frecvente",
     "questionList": {
       "questionOne": {
-        "question": "In cat timp soseste kit-ul?",
+        "question": "In cat timp soseste pachetul?",
         "answer": "Coletul ajunge de obicei la client in 1-2 zile din momentul plasarii comenzii."
       },
       "questionTwo": {
-        "question": "Este complicat realizarea unui mulaj ?",
-        "answer": "In kit-ul de mulaj sunt incluse atat insutrctiuni pe foaie, dar si VIDEO. Veti primi pe hartie un link pe care trebuie sa-l accesati ca sa vizionati instructiunile video. Instructiunile sunt realizate pas cu pas, in asa fel incat sa puteti parcurge toti pasii fara nici o problema, bucurandu-va in final de mulajul mainilor voastre."
+        "question": "Sunt produse naturale ?",
+        "answer": "Da da, foarte naturale"
       },
       "questionThree": {
         "question": "Ce inseamna Garantie 100 % Retur la produse?",
@@ -267,9 +296,10 @@
       }
     }
   },
+
   "invoiceTemplate": {
-    "headerTextInvoice": "DinIubire.Ro ",
+    "headerTextInvoice": "MontanAir.Ro - Cosmetice Naturale",
     "thankYouMessage": "Va multumim de comanda!",
-    "authorSignature": "DinIubire.Ro"
+    "authorSignature": "MontanAir.Ro"
   }
 }

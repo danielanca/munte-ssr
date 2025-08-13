@@ -1,7 +1,9 @@
+// @ts-nocheck
+
 import React, { useEffect, useState } from "react";
 import SummaryBox from "./SummaryBox";
 import { useTranslation } from "react-i18next";
-import { getAllOrders } from "../../../data/productList";
+import { getAllOrders } from "../../../data/productListold";
 import classes from "./Summary.module.scss";
 import { IsummData } from "../../interfaces/IsummData";
 

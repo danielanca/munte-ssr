@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState, useEffect } from "react";
 import { addAnalyticsSetting, fetchAnalyticsSetting } from "../../data/AnalyticsData";
 import { useNavigate } from "react-router-dom";

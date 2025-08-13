@@ -1,4 +1,5 @@
-import logo from "../../media/assets/logo.png";
+import logo from "../../media1/assets/logo.png";
+
 import avt from "../assets/images/avatar.jpg";
 import logKey from "../assets/images/Reset password-pana.svg";
 import dashboard from "../assets/images/Revenue-cuate.svg";

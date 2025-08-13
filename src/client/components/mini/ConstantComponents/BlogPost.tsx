@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from "react";
 import BlogItem from "./BlogItem";
 import { NavHashLink } from "react-router-hash-link";

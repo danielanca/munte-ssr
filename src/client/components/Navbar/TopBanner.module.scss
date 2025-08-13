@@ -1,16 +1,26 @@
+@import "../../main.module.scss";
+@import "../../data//themes.scss";
 
+.bigBlanaBannerParentContainer{
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
 
-.bigBlanaBanner {
-  @include container-fluid;
+.bigBlanaBannerContainer {
+  @extend .container-fluid;
+
   display: flex;
   flex-direction: row;
   height: 45px;
-  width: 100%;
+  width: 1920px;
   position: relative;
-  background-color: #ea4134;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 8px;
+  // align-items: center;
+  justify-content: space-evenly;
+  // padding: 10px 8px;
+  padding: 10px 4%;
+    // padding-left: 4%;
+    // padding-right: 4%;
   @include media("<tablet") {
     flex-direction: column;
     height: auto;
@@ -37,28 +47,27 @@
 .headTitle {
   color: whitesmoke;
   text-align: center;
-  // font-size: clamp(13.4px, 2.2vw, 24px);
+  font-size: 1em;
   margin: 0;
+  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
-  font-weight: 200;
-  font-family: "Luckiest Guy";
+  font-weight: 600;
 
   @include media("<tablet") {
+    text-align: center;
+    inline-size: 280px;
     overflow-wrap: break-word;
   }
 }
 .emailTop {
-  @include col-size(3,"md");
+  @extend .col-md-3;
   font-family: "Roboto", sans-serif;
   color: #eee6d3;
   font-weight: 900;
   font-size: 12px;
-  @include media("<tablet") {
-    display: none;
-  }
 }
 .socialsTop {
-  @include col-size(3,"md");
+  @extend .col-md-3;
   font-family: "Roboto", sans-serif;
   color: #eee6d3;
   display: flex;
@@ -66,6 +75,17 @@
   justify-content: flex-end;
   align-items: center;
   @include media("<tablet") {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topBannerText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .emailTop{
     display: none;
   }
 }

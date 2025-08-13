@@ -41,10 +41,5 @@ export const TextContentRoutes: RouteType[] = [
     component: SimpleContent,
     props: { type: "AffiliateProgram" },
   },
-  {
-    path: "contact",
-    layout: PublicLayout,
-    component: SimpleContent,
-    props: { type: "ContactSimple" },
-  },
+  
 ];

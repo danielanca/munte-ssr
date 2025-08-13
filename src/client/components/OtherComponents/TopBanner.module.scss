@@ -1,0 +1,91 @@
+@import "./../main.module.scss";
+@import "./../data//themes.scss";
+
+.bigBlanaBannerParentContainer{
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
+.bigBlanaBannerContainer {
+  @extend .container-fluid;
+
+  display: flex;
+  flex-direction: row;
+  height: 45px;
+  width: 1920px;
+  position: relative;
+  // align-items: center;
+  justify-content: space-evenly;
+  // padding: 10px 8px;
+  padding: 10px 4%;
+    // padding-left: 4%;
+    // padding-right: 4%;
+  @include media("<tablet") {
+    flex-direction: column;
+    height: auto;
+    max-height: 70px;
+    padding: 10px 8px;
+  }
+  @include media(">=tablet", "<desktop") {
+    justify-content: space-between;
+  }
+}
+.iconStyle {
+  width: 26px;
+  height: 26px;
+  filter: invert(1);
+}
+.iconWrapper {
+  width: auto;
+  display: flex;
+  column-gap: 13px;
+  grid-column-gap: 13px;
+  cursor: pointer;
+  margin-right: 30px;
+}
+.headTitle {
+  color: whitesmoke;
+  text-align: center;
+  font-size: 1em;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+
+  @include media("<tablet") {
+    text-align: center;
+    inline-size: 280px;
+    overflow-wrap: break-word;
+  }
+}
+.emailTop {
+  @extend .col-md-3;
+  font-family: "Roboto", sans-serif;
+  color: #eee6d3;
+  font-weight: 900;
+  font-size: 12px;
+}
+.socialsTop {
+  @extend .col-md-3;
+  font-family: "Roboto", sans-serif;
+  color: #eee6d3;
+  display: flex;
+  font-weight: 900;
+  justify-content: flex-end;
+  align-items: center;
+  @include media("<tablet") {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .topBannerText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .emailTop{
+    display: none;
+  }
+}

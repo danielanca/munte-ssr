@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState } from "react";
 import { addProduct } from "../../data/productList";
 import { useNavigate } from "react-router-dom";

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useEffect, useState } from "react";
 import { getData, deleteProductByID, copyAllData } from "../../data/productList";
 import { useNavigate } from "react-router-dom";

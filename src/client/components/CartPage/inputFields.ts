@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { InputProps } from "./typeProps";
 import { orderProps } from "../../utils/OrderInterfaces";
 import strings from "./../../data/strings.json";
@@ -38,23 +37,23 @@ export const getInputFields = (
       labelText: orderString.inputsLabels.city,
       mandatoryInput: true
     },
-    // county: {
-    //   name: "county",
-    //   inputListener: inputHandler,
-    //   value: orderData.county,
-    //   labelText: orderString.inputsLabels.county,
-    //   mandatoryInput: true,
-    //   inputOptions: {
-    //     autoComplete: "false",
-    //     list: "county"
-    //   },
-    //   otherStructure: {
-    //     dataList: {
-    //       name: "county",
-    //       list: componentStrings.FinishOrder.countyList
-    //     }
-    //   }
-    // },
+    county: {
+      name: "county",
+      inputListener: inputHandler,
+      value: orderData.county,
+      labelText: orderString.inputsLabels.county,
+      mandatoryInput: true,
+      inputOptions: {
+        autoComplete: "false",
+        list: "county"
+      },
+      otherStructure: {
+        dataList: {
+          name: "county",
+          list: componentStrings.FinishOrder.countyList
+        }
+      }
+    },
     phoneNo: {
       name: "phoneNo",
       inputListener: inputHandler,

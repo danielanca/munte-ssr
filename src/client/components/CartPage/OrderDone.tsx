@@ -1,29 +1,59 @@
-import React, { useEffect } from 'react';
+import React from "react";
 import { HashLink as Link, NavHashLink } from "react-router-hash-link";
+import images from "../../data/images";
+import { AiOutlineCheck } from "react-icons/ai"
 import strings from "../../data/strings.json";
 import styles from "./OrderDone.module.scss";
-import parse from "html-react-parser";
-import { fireConfetti } from '../Confetti/Confetti'; 
+
+const formatSubtitle = (subtitle: string) => {
+  const subtitleDesc = subtitle.split(' ');
+  const formattedSubtitle = subtitleDesc.map((word, index) => {
+    if (word === 'Dinmunte.') {
+      return <span key={index} className={styles.DinMunte}>Dinmunte. </span>;
+    } else {
+      return <span key={index}>{word} </span>;
+    }
+  });
+
+  return <React.Fragment>{formattedSubtitle}</React.Fragment>;
+};
+
+  const verificatiSubtitleEmail = (verificati_subtitle: string) => {
+    const emailText = verificati_subtitle.split(' ');
+
+    const email = emailText.map((email, index)=>{
+      if(email === "info@dinmunte.ro"){
+        return <span className={styles.emailText} key={index}>{email}</span>
+      }
+      else{
+        return <span key={index}>{email} </span>
+      }
+    })
+
+    return <React.Fragment>{email}</React.Fragment>
+  }
+
 
 const OrderDone = () => {
   let { OrderDone: doneString } = strings;
 
-  // Fire confetti when the component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    fireConfetti();
-  }, []); 
-
   return (
-    <div role={"contentinfo"} className={"row " + styles.confirmContainer} style={{ paddingTop: '150px', paddingBottom: '200px' }}>
+    <div role={"contentinfo"} className={styles.confirmContainer}>
       <div className={styles.horizontalAlign}>
-        <p className={styles.text}>{doneString.title}</p>
-        <p className={styles.miniText}>{parse(doneString.subtitle)}</p>
+        <p className={styles.title}>
+          {doneString.title}
+        </p>
+        <p className={styles.mainDescription}>
+          {formatSubtitle(doneString.subtitle)}
+        </p>
       </div>
-      <div className={styles.horizontalAlign}>
-        <NavHashLink className={styles.HashLinkStyle} to="/">
-          <button className={styles.buttonToHome}>{doneString.goHome}</button>
-        </NavHashLink>
+
+      <div className={styles.tickIcon}>
+        <img src={images.tick} alt="" className={styles.tick} />
+      </div>
+      <div>
+        <p className={styles.verificati_title}>{doneString.verificati_title}</p>
+        <p className={styles.verificati_subtitle}>{verificatiSubtitleEmail(doneString.verificati_subtitle)}</p>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 export interface ErrorProps {
   paymentSelected: boolean;
   termsAccepted: boolean;
@@ -9,10 +8,16 @@ export interface OrderProps {
 }
 export interface ExplicitProdListProps {
   id: string;
+  // id: any;
   name: string;
   itemNumber: string;
   imageProduct: string;
   price: string;
+  discountedPrice: string;
+  realStock: string;
+  realStockCheck: string;
+  fakeStock: string;
+  fakeStockCheck: string;
 }
 
 export interface PropertyInput {
@@ -46,12 +51,21 @@ export interface ProductSessionProps {
     imageProduct: string[];
     jsonContent: string;
     price: string;
+    discountedPrice: string;
+    realStock: string;
+    realStockCheck: string;
+    fakeStock: string;
+    fakeStockCheck: string;
     reviews: {};
     shortDescription: string;
     title: string;
   };
 }
 export interface ProductCookiesProps {
+  // id: any;
   id: string;
   itemNumber: string;
+}
+export interface CartProps {
+  notifyMe: React.Dispatch<React.SetStateAction<number>>;
 }

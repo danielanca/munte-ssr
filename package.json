@@ -119,7 +119,6 @@
     "@types/react-bootstrap": "^1.0.1",
     "@types/react-dom": "^18.2.14",
     "@types/react-helmet": "^6",
-    "@types/react-html-parser": "^2.0.6",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-router-hash-link": "^2",
     "@types/react-star-ratings": "^2.3.3",
